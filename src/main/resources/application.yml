@@ -1,11 +1,11 @@
 spring:
   datasource:
     ## using Mariadb
-    driver-class-name: ${jdbc.class:org.mariadb.jdbc.Driver}
-    url: ${jdbc.url}
+    # driver-class-name: ${jdbc.class:org.mariadb.jdbc.Driver}
+    # url: ${jdbc.url}
     ## using MySql
-    ##driver-class-name: ${jdbc.class:com.mysql.cj.jdbc.Driver}
-    ##url: ${jdbc.url:jdbc:mysql://localhost:3306/oh}
+    driver-class-name: ${jdbc.class:com.mysql.cj.jdbc.Driver}
+    url: ${jdbc.url:jdbc:mysql://localhost:3306/oh}
     username: ${jdbc.username}
     password: ${jdbc.password}
   jpa:
