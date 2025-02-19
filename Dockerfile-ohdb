@@ -1,11 +1,11 @@
-FROM mariadb:10.6.11
+FROM mysql:8.0
 
 ARG OH_DB_LANG=en
 
-ENV MARIADB_DATABASE=oh
-ENV MARIADB_ROOT_PASSWORD=root
-ENV MARIADB_USER=isf
-ENV MARIADB_PASSWORD=isf123
+ENV MYSQL_DATABASE=oh
+ENV MYSQL_ROOT_PASSWORD=root
+ENV MYSQL_USER=isf
+ENV MYSQL_PASSWORD=isf123
 
 COPY sql/step_01_create_structure.sql /docker-entrypoint-initdb.d/
 COPY sql/step_02_dump_menu.sql /docker-entrypoint-initdb.d/

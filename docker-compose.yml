@@ -2,16 +2,22 @@ version: '3'
 services:
   database:
     build:
-     context: ./
-     dockerfile: Dockerfile-ohdb
-     args:
-       OH_DB_LANG: ${OH_DB_LANG}
+      context: ./
+      dockerfile: Dockerfile-ohdb
+      args:
+        OH_DB_LANG: ${OH_DB_LANG}
     image: oh-core_database:latest
     ports:
-    - "${OH_MARIADB_PORT}:3306"
-    command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" --lower_case_table_names=1 --explicit_defaults_for_timestamp=OFF
+      - "${OH_MARIADB_PORT}:3306"
     environment:
-      MARIADB_DATABASE: ${OH_MARIADB_DATABASE}
-      MARIADB_ROOT_PASSWORD: ${OH_MARIADB_ROOT_PASSWORD}
-      MARIADB_USER: ${OH_MARIADB_USER}
-      MARIADB_PASSWORD: ${OH_MARIADB_PASSWORD}
+      MYSQL_DATABASE: ${OH_MARIADB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${OH_MARIADB_ROOT_PASSWORD}
+      MYSQL_USER: ${OH_MARIADB_USER}
+      MYSQL_PASSWORD: ${OH_MARIADB_PASSWORD}
+
+    # This ensures the server starts with local_infile=1
+    command: mysqld --local-infile=1 --lower_case_table_names=1 --explicit_defaults_for_timestamp=OFF
+    # Mount our custom config file so that both server and client settings
+    # are applied (particularly [client] local_infile=1).
+    volumes:
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
